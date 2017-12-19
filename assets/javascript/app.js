@@ -156,7 +156,7 @@ $(document).ready(function() {
 
   // timer function
   function countDown() {
-    var time = 11
+    var time = 30
     var myInterval = setInterval(function() {
       if (time < 10) {
         $('.timer').html("0" + time)
@@ -188,18 +188,25 @@ $(document).ready(function() {
   // reveal answer function
   function revealAns() {
     var answerStr = triviaQuestions[triviaQuestionIndex].choices[(triviaQuestions[triviaQuestionIndex].answer)]
-    console.log('seeing the string of answer')
+    console.log('seeing the string of answer', answerStr)
     //var answerStr = answerIndex.toString
     if (correct) {
       $(".ansReveal").html(messages.correctAns + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
       $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      //postQuestions();
+      holdTimer()
     } else if (!correct) {
       $(".ansReveal").html(messages.wrongAns  + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
-        $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      //postQuestions();
+      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
+      holdTimer()
     }
   }
+
+  // timer until next question
+function holdTimer() {
+  postQuestions()
+  console.log('testing holdTimer')
+}
+setTimeout(holdTimer, 3000);
 
   // final results page
   function printResults() {
