@@ -1,0 +1,62 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-image: url("../images/holy_grail-icon.png");
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 25%;
+  min-height: 100%;
+}
+
+.jumbotron {
+  font-family: 'Uncial Antiqua', cursive;
+  padding: 1rem 2rem;
+  background-color: #F7EF56;
+}
+
+.p-lead {
+    margin-bottom: 0;
+}
+
+.display-3 {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.btn-success, .btn-secondary {
+  min-width: 130px;
+}
+
+.question {
+  font-size: 2rem;
+}
+
+.pickAnswer {
+    border: solid 3px #5DA7Da;
+    background-color: #F7EF56;
+}
+
+.pickAnswer, .pickAnswer:hover {
+    display: block;
+    margin: 20px 0;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+.pickAnswer:hover {
+    border: solid 3px #ffff;
+    cursor: pointer;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
