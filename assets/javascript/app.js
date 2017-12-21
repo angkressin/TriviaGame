@@ -207,10 +207,10 @@ $(document).ready(function() {
     console.log('seeing the string of answer', answerStr)
     if (correct) {
       $(".ansReveal").html(messages.correctAns + "<div>" + "'" + answerStr + "'")
-      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />').addClass("img-fluid")
+      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
     } else if (!correct) {
       $(".ansReveal").html(messages.wrongAns + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
-      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />').addClass("img-fluid")
+      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
     }
     // timer until next question reveal
     holdAns = setTimeout(function() {
@@ -219,7 +219,7 @@ $(document).ready(function() {
       $(".choices").show()
       $(".ansReveal").hide()
       postQuestions()
-      }, 3000)
+    }, 5000)
   }
 
   // final results page
