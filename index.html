@@ -8,64 +8,69 @@
   <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Uncial+Antiqua" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <title>The Bridge of Eternal Peril</title>
 </head>
 
 <body>
-  <div class="jumbotron jumbotron-fluid text-center">
-    <div class="container">
-      <h1 class="display-3">The Bridge of Eternal Peril</h1>
-      <p class="lead p-lead">A Monty Python Holy Grail Trivia Game</p>
+  <div class="wrapper">
+    <div class="jumbotron jumbotron-fluid text-center">
+      <div class="container">
+        <h1 class="display-3">The Bridge of Eternal Peril</h1>
+        <p class="lead p-lead">A Monty Python Holy Grail Trivia Game</p>
+      </div>
     </div>
-  </div>
-  <div class="container text-center mt-5">
-    <div class="row">
-      <div class="col">
-        <div class="row justify-content-center mb-2">
-          <div class="col-8">
-            <div class="startPage">
+    <div class="container text-center mt-5">
+      <div class="row">
+        <div class="col">
+          <div class="row justify-content-center mb-2">
+            <div class="col-8">
+              <div class="startPage">
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center mb-2">
+            <div class="col startBtn">
+              <button type="button" class="btn btn-success">Start game</button>
             </div>
           </div>
         </div>
-        <div class="row justify-content-center mb-2">
-          <div class="col startBtn">
-            <button type="button" class="btn btn-success">Start game</button>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col timer">
+          <!--countdown timer here-->
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col timer">
-        <!--countdown timer here-->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col question">
-        <!--questions here-->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col choices">
-        <!--choices here-->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col ansReveal">
-        <!--answer revealed here-->
-        <img>
+      <div class="row">
+        <div class="col question">
+          <!--questions here-->
         </div>
-    </div>
+      </div>
+      <div class="row">
+        <div class="col choices">
+          <!--choices here-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col ansReveal">
+          <!--answer revealed here-->
+          <img>
+        </div>
+      </div>
       <div class="row">
         <div class="col resultsPage">
           <!--results here-->
         </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col resetBtn">
-        <button type="button" class="btn btn-success">Try again!</button>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col resetBtn">
+          <button type="button" class="btn btn-success">Try again!</button>
+        </div>
       </div>
     </div>
+  </div>
+  <div class="container-fluid footer text-center mt-3">
+    &copy Copyright 2017 Angela Kressin
   </div>
 
   <!--JS and bootstrap Jquery-->

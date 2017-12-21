@@ -41,14 +41,14 @@ $(document).ready(function() {
     // q3
     {
       question: "What do the Knights who until recently said Ni now say?",
-      choices: ["Ni Ni Ni!", "Ekke, Ekke, Ekke, Ekke, Ptang Zoo Boing!", "It", "x1"],
+      choices: ["Ni Ni Ni!", "Ekke, Ekke, Ekke, Ekke, Ptang Zoo Boing!", "It", "You shall not pass!"],
       answer: 1,
       gif: "assets/images/question3.gif"
     },
     // q4
     {
       question: "What is your favorite color?",
-      choices: ["Blue...no red!", "x2", "x3", "x4"],
+      choices: ["Blue...no red!", "yellow", "red", "blue"],
       answer: 0,
       gif: "assets/images/question4.gif"
     },
@@ -62,7 +62,7 @@ $(document).ready(function() {
     // q6
     {
       question: "What is the air-speed velocity of an unladen swallow?",
-      choices: ["x1", "African or European?", "x3", "x4"],
+      choices: ["24 miles per hour", "African or European?", "11 meters per second", "V = MPH"],
       answer: 1,
       gif: "assets/images/question6.gif"
     },
@@ -83,14 +83,14 @@ $(document).ready(function() {
     // q9
     {
       question: "How many did the Robinsons' lose to the plague today?",
-      choices: ["x1", "x2", "x3", "9"],
+      choices: ["15", "0", "But I'm not dead yet!", "9"],
       answer: 3,
       gif: "assets/images/question9.gif"
     },
     // q10
     {
       question: "How can you tell somebody's a King?",
-      choices: ["x1", "x2", "He hasn't got shit all over him!", "x4"],
+      choices: ["He's wearing a crown", "He was voted to be King", "He hasn't got shit all over him!", "He was annointed with an aquatic ceremony"],
       answer: 2,
       gif: "assets/images/question10.gif"
     }
@@ -219,7 +219,7 @@ $(document).ready(function() {
       $(".choices").show()
       $(".ansReveal").hide()
       postQuestions()
-    }, 5000)
+    }, 6000)
   }
 
   // final results page
