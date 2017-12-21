@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   // Global variables
   var timer
   var question
@@ -23,70 +24,70 @@ $(document).ready(function() {
   }
 
   var triviaQuestions = [
-    //question1
+    // q1
     {
       question: "How old is Dennis?",
       choices: ["20", "54", "37. He's not old!", "6"],
       answer: 2,
       gif: "assets/images/question1.gif"
     },
-    // question2
+    // q2
     {
       question: "What are the French doing in England?",
       choices: ["Seeing the loveli lakes", "Guarding their tower", "On holiday", "None of your business, now buzzoff!"],
       answer: 3,
       gif: "assets/images/question2.gif"
     },
-    // question3
+    // q3
     {
       question: "What do the Knights who until recently said Ni now say?",
       choices: ["Ni Ni Ni!", "Ekke, Ekke, Ekke, Ekke, Ptang Zoo Boing!", "It", "x1"],
       answer: 1,
       gif: "assets/images/question3.gif"
     },
-    // question4
+    // q4
     {
       question: "What is your favorite color?",
       choices: ["Blue...no red!", "x2", "x3", "x4"],
       answer: 0,
       gif: "assets/images/question4.gif"
     },
-    // question5
+    // q5
     {
       question: "What is the capital of Assyria",
       choices: ["Assur", "Harran", "Ekallatum", "What? I don't know that!"],
       answer: 3,
       gif: "assets/images/question5.gif"
     },
-    // question6
+    // q6
     {
       question: "What is the air-speed velocity of an unladen swallow?",
       choices: ["x1", "African or European?", "x3", "x4"],
       answer: 1,
       gif: "assets/images/question6.gif"
     },
-    // question7
+    // q7
     {
       question: "What else floats on water?",
       choices: ["Lead", "Churches", "Very small rocks", "Ducks"],
       answer: 3,
       gif: "assets/images/question7.gif"
     },
-    // question8
+    // q8
     {
       question: "What do we burn apart from witches?",
       choices: ["More witches!", "wood", "more witches.", "Mooooore witches!"],
       answer: 1,
       gif: "assets/images/question8.gif"
     },
-    // question9
+    // q9
     {
       question: "How many did the Robinsons' lose to the plague today?",
       choices: ["x1", "x2", "x3", "9"],
       answer: 3,
       gif: "assets/images/question9.gif"
     },
-    // question10
+    // q10
     {
       question: "How can you tell somebody's a King?",
       choices: ["x1", "x2", "He hasn't got shit all over him!", "x4"],
@@ -96,22 +97,23 @@ $(document).ready(function() {
   ]
 
   // beginning of functions
+
   // start page with start and instructions button
   function startPage() {
     clearTimeout(holdAns)
     $(".startPage").show()
-    $(".startPage").append(messages.start)
+    $(".startPage").html(messages.start)
     $(".startBtn").show()
     $(".question").hide()
     $(".choices").hide()
     $(".timer").hide()
     $(".resultsPage").hide()
+    $(".resetBtn").hide()
+    $(".btn-success").click(function() {
+      startBtn(this)
+      console.log('clicked the start button')
+    })
   }
-
-  $(".btn-success").click(function() {
-    startBtn(this)
-    console.log('clicked the start button')
-  })
 
   // gamestart with button click event
   function startBtn(x) {
@@ -121,46 +123,48 @@ $(document).ready(function() {
     $(".question").show()
     $(".choices").show()
     $(".resultsPage").hide()
+    $(".resetBtn").hide()
     postQuestions()
   }
 
-  // post questions
   function postQuestions() {
-    clearTimeout(holdAns)
+    clearTimeout(holdAns) // clear time out so only show when answer is revealed
+    // post questions
     if (triviaQuestionIndex < triviaQuestions.length) {
       countDown()
       $(".question").html(triviaQuestions[triviaQuestionIndex].question)
-      $(".choices").html("");
+      $(".choices").empty()
       correct = false
       for (var j = 0; j < triviaQuestions[triviaQuestionIndex].choices.length; j++) {
-        var newDiv = $("<div>");
-        newDiv.addClass("pickAnswer").attr("ansIndex", j).html(triviaQuestions[triviaQuestionIndex].choices[j]);
-        $(".choices").append(newDiv);
+        var newDiv = $("<div>")
+        newDiv.addClass("pickAnswer").attr("ansIndex", j).html(triviaQuestions[triviaQuestionIndex].choices[j])
+        $(".choices").append(newDiv)
       }
       console.log('test if posting questions')
     } else {
       printResults()
     }
-    // log user choice
+    // record user choice
     $(".pickAnswer").on("click", function() {
       $(".timer").hide()
       $(".question").hide()
       $(".choices").hide()
       var userChoice = $(this).attr("ansIndex")
       userChoice = parseInt(userChoice)
-      // checks if user is correct and will tally accordingly
+      // check if user is correct
       if (userChoice === triviaQuestions[triviaQuestionIndex].answer) {
         correct = true
         revealAns()
         correctCounter++
         triviaQuestionIndex++
+        console.log("number of correct answers :", correctCounter)
       } else {
         revealAns()
         incorrectCounter++
         triviaQuestionIndex++
+        console.log("number of incorrect answers :", incorrectCounter)
       }
     })
-    holdAns
   }
 
   // 30s countdown function
@@ -184,8 +188,12 @@ $(document).ready(function() {
       if (time === 0) {
         correct = false
         unansweredCounter++
+        triviaQuestionIndex++
         clearInterval(myInterval)
-        postQuestions()
+        $(".timer").empty()
+        $(".question").empty()
+        $(".choices").empty()
+        revealAns()
       } else {
         time--
       }
@@ -197,16 +205,12 @@ $(document).ready(function() {
     $(".ansReveal").show()
     var answerStr = triviaQuestions[triviaQuestionIndex].choices[(triviaQuestions[triviaQuestionIndex].answer)]
     console.log('seeing the string of answer', answerStr)
-    //var answerStr = answerIndex.toString
     if (correct) {
       $(".ansReveal").html(messages.correctAns + "<div>" + "'" + answerStr + "'")
-      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      correctCounter++
+      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />').addClass("img-fluid")
     } else if (!correct) {
-      //holdTimer()
       $(".ansReveal").html(messages.wrongAns + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
-      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      incorrectCounter++
+      $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />').addClass("img-fluid")
     }
     // timer until next question reveal
     holdAns = setTimeout(function() {
@@ -220,20 +224,29 @@ $(document).ready(function() {
 
   // final results page
   function printResults() {
+    $(".resetBtn").show()
     $(".timer").hide()
     $(".question").hide()
     $(".choices").hide()
     $(".resultsPage").show()
-    $(".resultsPage").html(messages.resultsCorrect + correctCounter)
-    $(".resultsPage").html(messages.resultsWrong + incorrectCounter)
-    $(".resultsPage").html(messages.resultsUnanswered + unansweredCounter)
+    $(".btn-success").click(function() {
+      resetGame(this)
+      console.log('clicked the reset button')
+    })
+    $(".resultsPage").html(messages.resultsCorrect + correctCounter + "<div>" + messages.resultsWrong + incorrectCounter + "<div>" +messages.resultsUnanswered + unansweredCounter)
     console.log('placeholder for results')
   }
 
   // restart whole game (does not reload, resets game)
+  function resetGame() {
+    correctCounter = 0
+    incorrectCounter = 0
+    unansweredCounter = 0
+    triviaQuestionIndex = 0
+    startPage()
+  }
 
   //call start page
-
   startPage()
 
 })
