@@ -238,7 +238,7 @@ $(document).ready(function() {
   }
 
   // restart whole game (does not reload, resets game)
-  function resetGame() {
+  function resetGame(x) {
     correctCounter = 0
     incorrectCounter = 0
     unansweredCounter = 0
