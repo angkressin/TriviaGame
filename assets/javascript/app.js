@@ -10,12 +10,16 @@ $(document).ready(function() {
   var unansweredCounter = 0
   var triviaQuestionIndex = 0
   var correct = false
+  var holdAns
 
   var messages = {
     start: "Welcome to a Monty Python Holy Grail themed trivia!" + "<div>Click 'Start Game' to begin your quest.</div>" + "<div>You will have 30 seconds to answer each of the 10 questions.</div>",
     correctAns: "<div class='green'>That is correct! On to the next one!</div>",
-    wrongAns: "<div class='red'>That is wrong! Ni! Next question!</div>",
-    correctAnsShow: "The correct answer is: "
+    wrongAns: "<div class='red'>That is wrong! Next question!</div>",
+    correctAnsShow: "The correct answer is: ",
+    resultsCorrect: "Number of correct answers: ",
+    resultsWrong: "Number of incorrect answers: ",
+    resultsUnanswered: "Number of questions unanswered: "
   }
 
   var triviaQuestions = [
@@ -91,9 +95,10 @@ $(document).ready(function() {
     }
   ]
 
-// beginning of functions
+  // beginning of functions
   // start page with start and instructions button
   function startPage() {
+    clearTimeout(holdAns)
     $(".startPage").show()
     $(".startPage").append(messages.start)
     $(".startBtn").show()
@@ -112,54 +117,58 @@ $(document).ready(function() {
   function startBtn(x) {
     $(".startPage").hide()
     $(".startBtn").hide()
+    $(".timer").show()
     $(".question").show()
     $(".choices").show()
-    $(".timer").show()
     $(".resultsPage").hide()
     postQuestions()
   }
 
   // post questions
   function postQuestions() {
-    if (triviaQuestionIndex <= triviaQuestions.length) {
+    clearTimeout(holdAns)
+    if (triviaQuestionIndex < triviaQuestions.length) {
+      countDown()
       $(".question").html(triviaQuestions[triviaQuestionIndex].question)
       $(".choices").html("");
       correct = false
       for (var j = 0; j < triviaQuestions[triviaQuestionIndex].choices.length; j++) {
         var newDiv = $("<div>");
-        newDiv.addClass("pickAnswer").attr("indexnum", j).html(triviaQuestions[triviaQuestionIndex].choices[j]);
+        newDiv.addClass("pickAnswer").attr("ansIndex", j).html(triviaQuestions[triviaQuestionIndex].choices[j]);
         $(".choices").append(newDiv);
       }
-    countDown()
-    console.log('test if posting questions')
-  }
-  // log user choice
-  $(".pickAnswer").on("click", function() {
-    $(".question").hide()
-    $(".choices").hide()
-    $(".timer").hide()
-    var userChoice = $(this).attr("indexnum")
-    userChoice = parseInt(userChoice)
-    // checks if user is correct and will tally accordingly
-    if (userChoice === triviaQuestions[triviaQuestionIndex].answer) {
-      correct = true
-      correctCounter++
-      triviaQuestionIndex++
-      revealAns()
+      console.log('test if posting questions')
     } else {
-      incorrectCounter++
-      triviaQuestionIndex++
-      revealAns()
+      printResults()
     }
-  })
+    // log user choice
+    $(".pickAnswer").on("click", function() {
+      $(".timer").hide()
+      $(".question").hide()
+      $(".choices").hide()
+      var userChoice = $(this).attr("ansIndex")
+      userChoice = parseInt(userChoice)
+      // checks if user is correct and will tally accordingly
+      if (userChoice === triviaQuestions[triviaQuestionIndex].answer) {
+        correct = true
+        revealAns()
+        correctCounter++
+        triviaQuestionIndex++
+      } else {
+        revealAns()
+        incorrectCounter++
+        triviaQuestionIndex++
+      }
+    })
+    holdAns
   }
 
-  // timer function
+  // 30s countdown function
   function countDown() {
     var time = 30
     var myInterval = setInterval(function() {
       if (time < 10) {
-        $('.timer').html("0" + time)
+        $(".timer").html("0" + time)
         //$('.timer').effect("pulsate", {
         //  times: 25
         //}, 1000 * 5)
@@ -167,7 +176,7 @@ $(document).ready(function() {
           clearInterval(myInterval)
         })
       } else {
-        $('.timer').html(time)
+        $(".timer").html(time)
         $(".pickAnswer").on("click", function() {
           clearInterval(myInterval)
         })
@@ -176,44 +185,49 @@ $(document).ready(function() {
         correct = false
         unansweredCounter++
         clearInterval(myInterval)
+        postQuestions()
       } else {
         time--
       }
     }, 1000);
   }
 
-
-  // button answer selector
-
   // reveal answer function
   function revealAns() {
+    $(".ansReveal").show()
     var answerStr = triviaQuestions[triviaQuestionIndex].choices[(triviaQuestions[triviaQuestionIndex].answer)]
     console.log('seeing the string of answer', answerStr)
     //var answerStr = answerIndex.toString
     if (correct) {
-      $(".ansReveal").html(messages.correctAns + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
+      $(".ansReveal").html(messages.correctAns + "<div>" + "'" + answerStr + "'")
       $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      holdTimer()
+      correctCounter++
     } else if (!correct) {
-      $(".ansReveal").html(messages.wrongAns  + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
+      //holdTimer()
+      $(".ansReveal").html(messages.wrongAns + "<div>" + messages.correctAnsShow + "<div>" + "'" + answerStr + "'")
       $(".ansReveal").append('<img src="' + triviaQuestions[triviaQuestionIndex].gif + '" />')
-      holdTimer()
+      incorrectCounter++
     }
+    // timer until next question reveal
+    holdAns = setTimeout(function() {
+      $(".timer").show()
+      $(".question").show()
+      $(".choices").show()
+      $(".ansReveal").hide()
+      postQuestions()
+      }, 3000)
   }
-
-  // timer until next question
-function holdTimer() {
-  postQuestions()
-  console.log('testing holdTimer')
-}
-setTimeout(holdTimer, 3000);
 
   // final results page
   function printResults() {
-    correctCounter
-    incorrectCounter
-    unansweredCounter
-    alert('placeholder for results')
+    $(".timer").hide()
+    $(".question").hide()
+    $(".choices").hide()
+    $(".resultsPage").show()
+    $(".resultsPage").html(messages.resultsCorrect + correctCounter)
+    $(".resultsPage").html(messages.resultsWrong + incorrectCounter)
+    $(".resultsPage").html(messages.resultsUnanswered + unansweredCounter)
+    console.log('placeholder for results')
   }
 
   // restart whole game (does not reload, resets game)
