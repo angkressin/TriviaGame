@@ -173,9 +173,6 @@ $(document).ready(function() {
     var myInterval = setInterval(function() {
       if (time < 10) {
         $(".timer").html("0" + time)
-        //$('.timer').effect("pulsate", {
-        //  times: 25
-        //}, 1000 * 5)
         $(".pickAnswer").on("click", function() {
           clearInterval(myInterval)
         })
